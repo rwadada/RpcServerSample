@@ -1,6 +1,6 @@
 package com.rwadada
 
-import com.rwadada.model.ChatSystem
+import com.rwadada.model.ChatService
 import com.rwadada.model.Message
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
@@ -21,9 +21,9 @@ object DataStore {
     }
 }
 
-class ChatSystemImpl(
+class ChatServiceImpl(
     override val coroutineContext: CoroutineContext
-) : ChatSystem {
+) : ChatService {
     override suspend fun sendMessage(clientId: String, text: String) {
         DataStore.setMessage(Message(clientId, text))
     }
@@ -55,7 +55,7 @@ fun Application.module() {
                 }
             }
 
-            registerService<ChatSystem> { ctx -> ChatSystemImpl(ctx) }
+            registerService<ChatService> { ctx -> ChatServiceImpl(ctx) }
         }
     }
 }

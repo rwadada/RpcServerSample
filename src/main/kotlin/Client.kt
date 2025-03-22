@@ -1,6 +1,6 @@
 package com.rwadada
 
-import com.rwadada.model.ChatSystem
+import com.rwadada.model.ChatService
 import io.ktor.client.*
 import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
@@ -33,8 +33,8 @@ fun main(args: Array<String>) = runBlocking {
         }
     }
 
-    val chatSystem: ChatSystem = client.withService<ChatSystem>()
-    chatSystem.sendMessage("Client", message)
+    val chatService: ChatService = client.withService<ChatService>()
+    chatService.sendMessage("Client", message)
 
     ktorClient.close()
 }
