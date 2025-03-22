@@ -6,10 +6,7 @@ import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.routing.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.rpc.krpc.ktor.server.Krpc
 import kotlinx.rpc.krpc.ktor.server.rpc
 import kotlinx.rpc.krpc.serialization.json.json
@@ -31,8 +28,12 @@ class ChatSystemImpl(
         DataStore.setMessage(Message(clientId, text))
     }
 
-    override suspend fun viewMessages(): Flow<List<Message>> {
-        return DataStore.messages
+    override suspend fun getAllMessage(): List<Message> {
+        return DataStore.messages.value
+    }
+
+    override suspend fun observeMessage(): Flow<Message> {
+        return DataStore.messages.map { it.last() }
     }
 }
 

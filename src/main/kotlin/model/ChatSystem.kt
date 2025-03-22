@@ -8,7 +8,8 @@ import kotlinx.serialization.Serializable
 @Rpc
 interface ChatSystem : RemoteService {
     suspend fun sendMessage(clientId: String, text: String)
-    suspend fun viewMessages(): Flow<List<Message>>
+    suspend fun getAllMessage(): List<Message>
+    suspend fun observeMessage(): Flow<Message>
 }
 
 @Serializable
